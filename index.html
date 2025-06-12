@@ -8,7 +8,7 @@
     body {
       margin: 0;
       overflow: hidden;
-      background: linear-gradient(180deg, #3b0a65, #8f4ac5);
+      background: radial-gradient(circle at top, #6a0dad, #3b0a65);
       height: 100vh;
       font-family: 'Segoe UI', sans-serif;
       display: flex;
@@ -22,49 +22,53 @@
       font-size: 2.5rem;
       text-align: center;
       padding: 20px;
-      animation: pulse 4s ease-in-out infinite;
+      animation: pulse 2s ease-in-out infinite;
       z-index: 2;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
     }
 
     @keyframes pulse {
       0%, 100% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.05); opacity: 0.9; }
+      50% { transform: scale(1.1); opacity: 0.9; }
     }
 
     .heart {
       position: absolute;
-      width: 20px;
-      height: 20px;
+      width: 25px;
+      height: 25px;
       background: pink;
       transform: rotate(45deg);
-      animation: floatUp 10s linear infinite;
-      opacity: 0.6;
+      animation: floatUp 4s ease-in infinite;
+      opacity: 0.8;
       cursor: pointer;
-      transition: transform 0.3s ease, opacity 0.3s ease;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+      z-index: 1;
     }
 
     .heart::before, .heart::after {
       content: '';
       position: absolute;
-      width: 20px;
-      height: 20px;
+      width: 25px;
+      height: 25px;
       background: pink;
       border-radius: 50%;
     }
 
     .heart::before {
-      top: -10px;
+      top: -12.5px;
       left: 0;
     }
 
     .heart::after {
-      left: -10px;
+      left: -12.5px;
       top: 0;
     }
 
     .explode {
-      transform: scale(2) rotate(45deg) !important;
-      opacity: 0 !important;
+      animation: pop 0.4s forwards;
+      z-index: 10;
     }
 
     @keyframes floatUp {
@@ -72,13 +76,18 @@
         transform: translateY(100vh) scale(1) rotate(45deg);
         opacity: 0;
       }
-      50% {
+      30% {
         opacity: 1;
       }
       100% {
         transform: translateY(-10vh) scale(1.2) rotate(45deg);
         opacity: 0;
       }
+    }
+
+    @keyframes pop {
+      0% { transform: scale(1.5) rotate(45deg); opacity: 1; }
+      100% { transform: scale(3) rotate(45deg); opacity: 0; }
     }
   </style>
 </head>
@@ -91,20 +100,20 @@
       const heart = document.createElement('div');
       heart.classList.add('heart');
       heart.style.left = Math.random() * 100 + 'vw';
-      heart.style.animationDuration = 8 + Math.random() * 5 + 's';
-      heart.style.opacity = Math.random();
-      heart.style.background = `hsl(${Math.random() * 360}, 70%, 80%)`;
+      heart.style.animationDuration = (3 + Math.random() * 2) + 's';
+      heart.style.opacity = 0.6 + Math.random() * 0.4;
+      heart.style.background = `hsl(${Math.random() * 360}, 80%, 85%)`;
 
       heart.addEventListener('click', () => {
         heart.classList.add('explode');
-        setTimeout(() => heart.remove(), 300);
+        setTimeout(() => heart.remove(), 400);
       });
 
       body.appendChild(heart);
-      setTimeout(() => heart.remove(), 12000);
+      setTimeout(() => heart.remove(), 5000);
     }
 
-    setInterval(createHeart, 300);
+    setInterval(createHeart, 200);
   </script>
 </body>
 </html>
