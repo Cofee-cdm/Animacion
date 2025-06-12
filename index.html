@@ -39,6 +39,8 @@
       transform: rotate(45deg);
       animation: floatUp 10s linear infinite;
       opacity: 0.6;
+      cursor: pointer;
+      transition: transform 0.3s ease, opacity 0.3s ease;
     }
 
     .heart::before, .heart::after {
@@ -58,6 +60,11 @@
     .heart::after {
       left: -10px;
       top: 0;
+    }
+
+    .explode {
+      transform: scale(2) rotate(45deg) !important;
+      opacity: 0 !important;
     }
 
     @keyframes floatUp {
@@ -87,6 +94,12 @@
       heart.style.animationDuration = 8 + Math.random() * 5 + 's';
       heart.style.opacity = Math.random();
       heart.style.background = `hsl(${Math.random() * 360}, 70%, 80%)`;
+
+      heart.addEventListener('click', () => {
+        heart.classList.add('explode');
+        setTimeout(() => heart.remove(), 300);
+      });
+
       body.appendChild(heart);
       setTimeout(() => heart.remove(), 12000);
     }
